@@ -1075,6 +1075,17 @@
 		//We don't use interrupt here?
 		//Because all the expand IO are output.
 	};
+
+	pcf8563w@51 {
+		compatible = "nxp,pcf8563";
+		reg = <0x51>;
+		reset-source;
+		/* 0 = 4096Hz, 1 = 64Hz, 2 = 1Hz, 3 = 1/60Hz */
+		timer-frequency = <0x02>;
+		/* Timeout count, max 255 min 2*/
+		default-timeout =  <120>;
+		min-hw-heartbeat-ms = <2000>;
+	};
 };
 
 &main_i2c3 {

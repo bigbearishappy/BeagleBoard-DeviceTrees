@@ -600,8 +600,7 @@
 
 	touchscreen_pins_default: touchscreen-pins-default {
 		pinctrl-single,pins = <
-			AM62X_IOPAD(0x01b4, PIN_OUTPUT, 7) /* (A13) SPI0_CS0.GPIO1_15 */
-			AM62X_IOPAD(0x00a0, PIN_INPUT, 7) /* (K25) GPMC0_WPn.GPIO0_39 */
+			AM62X_IOPAD(0x01b8, PIN_INPUT, 7) /* (C13) SPI0_CS1.GPIO1_16 */
 		>;
 	};
 

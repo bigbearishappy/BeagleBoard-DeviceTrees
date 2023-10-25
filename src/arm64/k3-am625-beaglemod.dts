@@ -333,8 +333,7 @@
 
 	hdmi_gpio_pins_default: hdmi-gpio-pins-default {
 		pinctrl-single,pins = <
-			AM62X_IOPAD(0x0094, PIN_INPUT_PULLUP | PIN_DEBOUNCE_CONF6, 7) /* (N20) GPMC0_BE1n.GPIO0_36 */
-			AM62X_IOPAD(0x0054, PIN_OUTPUT_PULLUP, 7) /* (P21) GPMC0_AD6.GPIO0_21 */
+			AM62X_MCU_IOPAD(0x0040, PIN_INPUT_PULLUP, 7) /* (D6) MCU_MCAN1_RX.MCU_GPIO0_16 */
 		>;
 	};
 
@@ -990,13 +989,6 @@
 		compatible = "atmel,24c256";
 		reg = <0x57>;
 	};
-};
-
-&main_i2c2 {
-	pinctrl-names = "default";
-	pinctrl-0 = <&i2c2_1v8_pins_default>;
-	clock-frequency = <10000>;
-	status = "okay";
 
 	it66121hdmitx: hdmitx@4c {
 		#sound-dai-cells = <0>;
@@ -1005,14 +997,14 @@
 		pinctrl-0 = <&hdmi_gpio_pins_default>;
 		reg = <0x4c>;
 
-		interrupt-parent = <&main_gpio0>;
-		interrupts = <36 IRQ_TYPE_EDGE_FALLING>;
+		interrupt-parent = <&mcu_gpio0>;
+		interrupts = <16 IRQ_TYPE_EDGE_FALLING>;
 
 		vcn33-supply = <&vdd_3v3>;
 		vcn18-supply = <&buck2_reg>;
 		vrf12-supply = <&buck3_reg>;
 
-		reset-gpios = <&main_gpio0 21 GPIO_ACTIVE_LOW>;
+		reset-gpios = <&pca953x 10 GPIO_ACTIVE_LOW>;
 
 		ports {
 			#address-cells = <1>;

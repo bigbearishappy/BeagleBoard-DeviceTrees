@@ -185,7 +185,7 @@
 			label = "wlan-en";
 			gpios = <&pca953x 2 GPIO_ACTIVE_HIGH>;
 			linux,default-trigger = "default-off";
- 			default-state = "off";
+ 			default-state = "on";
  		};
 
 		led-6 {
@@ -510,7 +510,7 @@
 
 	wifi_wlirq_pins_default: wifi-wlirq-pins-default {
 		pinctrl-single,pins = <
-			AM62X_IOPAD(0x00a8, PIN_INPUT, 7) /* (M21) GPMC0_CSn0.GPIO0_41 */
+			AM62X_IOPAD(0x0124, PIN_INPUT, 7) /* (D20) MMC2_SDCD.GPIO0_71 */
 		>;
 	};
 
@@ -1191,7 +1191,7 @@
 		pinctrl-names = "default";
 		pinctrl-0 = <&wifi_wlirq_pins_default>;
 		interrupt-parent = <&main_gpio0>;
-		interrupts = <41 IRQ_TYPE_EDGE_FALLING>;
+		interrupts = <71 IRQ_TYPE_EDGE_FALLING>;
 	};
 };
 

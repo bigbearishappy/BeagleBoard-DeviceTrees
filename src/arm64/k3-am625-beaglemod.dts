@@ -258,14 +258,12 @@
 
 		cpsw3g_phy0: ethernet-phy@0 {
 			reg = <0>;
-			ti,rx-internal-delay = <DP83867_RGMIIDCTL_2_00_NS>;
-			ti,fifo-depth = <DP83867_PHYCR_FIFO_DEPTH_4_B_NIB>;
-			ti,min-output-impedance;
+			reset-assert-us = <25>;
+			reset-deassert-us = <60000>; /* T2 */
 		};
 
 		cpsw3g_phy1: ethernet-phy@1 {
 			reg = <1>;
-			reset-gpios = <&main_gpio1 5 GPIO_ACTIVE_LOW>;
 			reset-assert-us = <25>;
 			reset-deassert-us = <60000>; /* T2 */
 		};
@@ -423,6 +421,23 @@
 		>;
 	};
 
+	rgmii2_pins_default: rgmii2-pins-default {
+		pinctrl-single,pins = <
+			AM62X_IOPAD(0x0184, PIN_INPUT, 0) /* (W18) RGMII2_RD0 */
+			AM62X_IOPAD(0x0188, PIN_INPUT, 0) /* (Y20) RGMII2_RD1 */
+			AM62X_IOPAD(0x018c, PIN_INPUT, 0) /* (Y19) RGMII2_RD2 */
+			AM62X_IOPAD(0x0190, PIN_INPUT, 0) /* (W20) RGMII2_RD3 */
+			AM62X_IOPAD(0x0180, PIN_INPUT, 0) /* (V18) RGMII2_RXC */
+			AM62X_IOPAD(0x017c, PIN_INPUT, 0) /* (W19) RGMII2_RX_CTL */
+			AM62X_IOPAD(0x016c, PIN_OUTPUT, 0) /* (AA20) RGMII2_TD0 */
+			AM62X_IOPAD(0x0170, PIN_OUTPUT, 0) /* (U15) RGMII2_TD1 */
+			AM62X_IOPAD(0x0174, PIN_OUTPUT, 0) /* (W17) RGMII2_TD2 */
+			AM62X_IOPAD(0x0178, PIN_OUTPUT, 0) /* (V16) RGMII2_TD3 */
+			AM62X_IOPAD(0x0168, PIN_OUTPUT, 0) /* (Y18) RGMII2_TXC */
+			AM62X_IOPAD(0x0164, PIN_OUTPUT, 0) /* (Y21) RGMII2_TX_CTL */
+		>;
+	};
+
 	emmc_pins_default: emmc-pins-default {
 		pinctrl-single,pins = <
 			AM62X_IOPAD(0x0220, PIN_INPUT, 0) /* (Y3) MMC0_CMD */
@@ -516,22 +531,6 @@
 		>;
 	};
 
-	spe_pins_default: spe-pins-default {
-		pinctrl-single,pins = <
-			AM62X_IOPAD(0x0168, PIN_INPUT, 1) /* (AE21) RGMII2_TXC.RMII2_CRS_DV */
-			AM62X_IOPAD(0x0180, PIN_INPUT, 1) /* (AD23) RGMII2_RXC.RMII2_REF_CLK */
-			AM62X_IOPAD(0x0184, PIN_INPUT, 1) /* (AE23) RGMII2_RD0.RMII2_RXD0 */
-			AM62X_IOPAD(0x0188, PIN_INPUT, 1) /* (AB20) RGMII2_RD1.RMII2_RXD1 */
-			AM62X_IOPAD(0x017c, PIN_INPUT, 1) /* (AD22) RGMII2_RX_CTL.RMII2_RX_ER */
-			AM62X_IOPAD(0x016c, PIN_INPUT, 1) /* (Y18) RGMII2_TD0.RMII2_TXD0 */
-			AM62X_IOPAD(0x0170, PIN_INPUT, 1) /* (AA18) RGMII2_TD1.RMII2_TXD1 */
-			AM62X_IOPAD(0x0164, PIN_INPUT, 1) /* (AA19) RGMII2_TX_CTL.RMII2_TX_EN */
-			AM62X_IOPAD(0x018c, PIN_OUTPUT, 7) /* (AC21) RGMII2_RD2.GPIO1_5 */
-			AM62X_IOPAD(0x0190, PIN_INPUT, 7) /* (AE22) RGMII2_RD3.GPIO1_6 */
-			/* THIS PIN A18 is routed to TP17 on unmodified board -> SPE at 25MHz (modified board routes to SPE) */
-			AM62X_IOPAD(0x01f0, PIN_OUTPUT, 5) /* (A18) EXT_REFCLK1.CLKOUT0 */
-		>;
-	};
 
 	mikrobus_i2c_pins_default: mikrobus-i2c-pins-default {
 		pinctrl-single,pins = <
@@ -812,7 +811,7 @@
 
 &cpsw3g {
 	pinctrl-names = "default";
-	pinctrl-0 = <&rgmii1_pins_default>, <&spe_pins_default>,
+	pinctrl-0 = <&rgmii1_pins_default>, <&rgmii2_pins_default>,
 		    <&gbe_pmx_obsclk>;
 	assigned-clocks = <&k3_clks 157 70>, <&k3_clks 157 20>;
 	assigned-clock-parents = <&k3_clks 157 72>, <&k3_clks 157 22>;
@@ -824,7 +823,7 @@
 };
 
 &cpsw_port2 {
-	phy-mode = "rmii";
+	phy-mode = "rgmii-rxid";
 	phy-handle = <&cpsw3g_phy1>;
 };
 

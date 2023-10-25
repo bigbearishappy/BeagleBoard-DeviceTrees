@@ -1028,6 +1028,17 @@
 			};
 		};
 	};
+
+	pca953x: pca@21 {
+		compatible = "nxp,pca9535";
+		reg = <0x21>;
+		status = "okay";
+
+		gpio-controller;
+		#gpio-cells = <2>;
+		//We don't use interrupt here?
+		//Because all the expand IO are output.
+	};
 };
 
 &main_i2c3 {

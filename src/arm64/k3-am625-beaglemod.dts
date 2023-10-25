@@ -217,20 +217,6 @@
 		};
 	};
 
-	gpio_keys: gpio-keys {
-		compatible = "gpio-keys";
-		autorepeat;
-		pinctrl-names = "default";
-		pinctrl-0 = <&usr_button_pins_default>;
-
-		usr: button-usr {
-			label = "User Key";
-			linux,code = <BTN_0>;
-			gpios = <&main_gpio0 18 GPIO_ACTIVE_LOW>;
-		};
-
-	};
-
 	hdmi0: connector {
 		compatible = "hdmi-connector";
 		label = "hdmi";
@@ -378,12 +364,6 @@
 	vdd_sd_dv_pins_default: vdd-sd-pins-default {
 		pinctrl-single,pins = <
 			AM62X_IOPAD(0x0244, PIN_OUTPUT, 7) /* (C17) MMC1_SDWP.GPIO1_49 */
-		>;
-	};
-
-	usr_button_pins_default: usr-button-pins-default {
-		pinctrl-single,pins = <
-			AM62X_IOPAD(0x0048, PIN_INPUT, 7) /* (N25) GPMC0_AD3.GPIO0_18 */
 		>;
 	};
 

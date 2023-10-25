@@ -701,8 +701,10 @@
 		>;
 	};
 
-	mcu_mikrobus_uart_pins_default: mcu-mikrobus-uart-pins-default {
+	mcu_bt_uart_pins_default: mcu-bt-uart-pins-default {
 		pinctrl-single,pins = <
+			AM62X_MCU_IOPAD(0x001c, PIN_INPUT, 0) /* (A6) MCU_UART0_CTSn */
+			AM62X_MCU_IOPAD(0x0020, PIN_OUTPUT, 0) /* (B6) MCU_UART0_RTSn */
 			AM62X_MCU_IOPAD(0x0014, PIN_INPUT, 0) /* (B5) MCU_UART0_RXD */
 			AM62X_MCU_IOPAD(0x0018, PIN_OUTPUT, 0) /* (A5) MCU_UART0_TXD */
 		>;
@@ -775,7 +777,12 @@
 
 &mcu_uart0 {
 	pinctrl-names = "default";
-	pinctrl-0 = <&mcu_mikrobus_uart_pins_default>;
+	pinctrl-0 = <&mcu_bt_uart_pins_default>;
+	status = "okay";
+	bluetooth {
+             compatible = "ti,wl1835-st";
+             enable-gpios = <&pca953x 1 GPIO_ACTIVE_HIGH>;
+	};
 };
 
 &mcu_spi0 {

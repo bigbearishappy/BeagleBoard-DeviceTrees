@@ -324,11 +324,6 @@
 		>;
 	};
 
-	hdmi_gpio_pins_default: hdmi-gpio-pins-default {
-		pinctrl-single,pins = <
-			AM62X_MCU_IOPAD(0x0040, PIN_INPUT_PULLUP, 7) /* (D6) MCU_MCAN1_RX.MCU_GPIO0_16 */
-		>;
-	};
 
 	gpio0_pins_default: gpio0-pins-default {
 		pinctrl-single,pins = <
@@ -570,6 +565,12 @@
 };
 
 &mcu_pmx0 {
+	hdmi_gpio_pins_default: hdmi-gpio-pins-default {
+		pinctrl-single,pins = <
+			AM62X_MCU_IOPAD(0x0040, PIN_INPUT_PULLUP, 7) /* (D4) MCU_MCAN1_RX.MCU_GPIO0_16 */
+		>;
+	};
+
 	i2c_qwiic_pins_default: i2c-qwiic-pins-default {
 		pinctrl-single,pins = <
 			AM62X_MCU_IOPAD(0x0044, PIN_INPUT, 0) /* (A8) MCU_I2C0_SCL */

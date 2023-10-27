@@ -475,7 +475,6 @@
 			AM62X_IOPAD(0x0110, PIN_INPUT, 0) /* (C25) MMC2_DAT1 */
 			AM62X_IOPAD(0x010c, PIN_INPUT, 0) /* (E23) MMC2_DAT2 */
 			AM62X_IOPAD(0x0108, PIN_INPUT, 0) /* (D24) MMC2_DAT3 */
-			AM62X_IOPAD(0x0124, PIN_INPUT, 0) /* (A23) MMC2_SDCD */
 			AM62X_IOPAD(0x11c, PIN_INPUT, 0) /* (#N/A) MMC2_CLKB */
 		>;
 	};
@@ -488,7 +487,7 @@
 
 	wifi_wlirq_pins_default: wifi-wlirq-pins-default {
 		pinctrl-single,pins = <
-			AM62X_IOPAD(0x0124, PIN_INPUT, 7) /* (D20) MMC2_SDCD.GPIO0_71 */
+			AM62X_IOPAD(0x0124, PIN_INPUT, 7) /* (A23) MMC2_SDCD.GPIO0_71 */
 		>;
 	};
 

@@ -546,18 +546,6 @@
 		>;
 	};
 
-	wifi_debug_uart_pins_default: wifi-debug-uart-pins-default {
-		pinctrl-single,pins = <
-			AM62X_IOPAD(0x001c, PIN_INPUT, 3) /* (J23) OSPI0_D4.UART6_RXD */
-			AM62X_IOPAD(0x0020, PIN_OUTPUT, 3) /* (J25) OSPI0_D5.UART6_TXD */
-		>;
-	};
-
-	usb1_pins_default: usb1-pins-default {
-		pinctrl-single,pins = <
-		>;
-	};
-
 	pmic_irq_pins_default: pmic-irq-pins-default {
 		pinctrl-single,pins = <
 			AM62X_IOPAD(0x01f4, PIN_INPUT_PULLUP, 0) /* (D16) EXTINTn */
@@ -608,16 +596,6 @@
 		pinctrl-single,pins = <
 			AM62X_MCU_IOPAD(0x0044, PIN_INPUT, 0) /* (A8) MCU_I2C0_SCL */
 			AM62X_MCU_IOPAD(0x0048, PIN_INPUT, 0) /* (D10) MCU_I2C0_SDA */
-		>;
-	};
-
-	adc_spi_pins_default: adc-spi-pins-default {
-		pinctrl-single,pins = <
-			AM62X_MCU_IOPAD(0x0040, PIN_INPUT, 4) /* (D4) MCU_MCAN1_RX.MCU_SPI1_CLK */
-			/* PINMUX TOOL WARNS FOR INVALID IOSET for CS1.. */
-			AM62X_MCU_IOPAD(0x003c, PIN_INPUT, 3) /* (E5) MCU_MCAN1_TX.MCU_SPI1_CS1 */
-			AM62X_MCU_IOPAD(0x001c, PIN_INPUT, 3) /* (A6) MCU_UART0_CTSn.MCU_SPI1_D0 */
-			AM62X_MCU_IOPAD(0x0020, PIN_INPUT, 3) /* (B6) MCU_UART0_RTSn.MCU_SPI1_D1 */
 		>;
 	};
 
@@ -716,19 +694,7 @@
 };
 
 &mcu_spi1 {
-	pinctrl-names = "default";
-	pinctrl-0 = <&adc_spi_pins_default>;
-	#address-cells = <1>;
-	#size-cells= <0>;
-	ti,spi-num-cs = <2>;
-
-	adc@1 {
-		compatible = "ti,adc102s051";
-		reg = <1>;
-		vref-supply = <&vdd_3v3>;
-		spi-max-frequency = <4000000>;
-		#io-channel-cells = <1>;
-	};
+	status = "disabled";
 };
 
 &mcu_rti0 {
@@ -776,7 +742,6 @@
 &usb1 {
 	dr_mode = "host";
 	pinctrl-names = "default";
-	pinctrl-0 = <&usb1_pins_default>;
 };
 
 &cpsw3g {
@@ -1189,13 +1154,7 @@
 };
 
 &main_uart6 {
-	pinctrl-names = "default";
-	pinctrl-0 = <&wifi_debug_uart_pins_default>;
-	symlink = "play/cc1352/uart";
-
-	bcfserial {
-		compatible = "beagle,bcfserial";
-	};
+	status = "disabled";
 };
 
 &main_spi0 {

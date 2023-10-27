@@ -99,6 +99,18 @@
 		clocks = <&k3_clks 148 0>;
 	};
 
+        mcu_mcan0: can@4e00000 {
+                compatible = "bosch,m_can";
+                reg = <0x00 0x4e00000 0x00 0x8000>,
+                      <0x00 0x4e08000 0x00 0x200>;
+                reg-names = "message_ram", "m_can";
+                power-domains = <&k3_pds 188 TI_SCI_PD_EXCLUSIVE>;
+                clocks = <&k3_clks 188 6>, <&k3_clks 188 1>;
+                clock-names = "hclk", "cclk";
+                bosch,mram-cfg = <0x0 128 64 64 64 64 32 32>;
+                status = "disabled";
+        };
+
 	mcu_gpio_intr: interrupt-controller@4210000 {
 		compatible = "ti,sci-intr";
 		reg = <0x00 0x04210000 0x00 0x200>;

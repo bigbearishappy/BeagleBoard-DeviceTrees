@@ -340,16 +340,6 @@
 
 	gpio0_pins_default: gpio0-pins-default {
 		pinctrl-single,pins = <
-			AM62X_IOPAD(0x0004, PIN_INPUT, 7) /* (G25) OSPI0_LBCLKO.GPIO0_1 */
-			AM62X_IOPAD(0x0008, PIN_INPUT, 7) /* (J24) OSPI0_DQS.GPIO0_2 */
-			AM62X_IOPAD(0x000c, PIN_INPUT, 7) /* (E25) OSPI0_D0.GPIO0_3 */
-			AM62X_IOPAD(0x0010, PIN_INPUT, 7) /* (G24) OSPI0_D1.GPIO0_4 */
-			AM62X_IOPAD(0x0014, PIN_INPUT, 7) /* (F25) OSPI0_D2.GPIO0_5 */
-			AM62X_IOPAD(0x0018, PIN_INPUT, 7) /* (F24) OSPI0_D3.GPIO0_6 */
-			AM62X_IOPAD(0x0024, PIN_INPUT, 7) /* (H25) OSPI0_D6.GPIO0_9 */
-			AM62X_IOPAD(0x0028, PIN_INPUT, 7) /* (J22) OSPI0_D7.GPIO0_10 */
-			AM62X_IOPAD(0x002c, PIN_INPUT, 7) /* (F23) OSPI0_CSn0.GPIO0_11 */
-			AM62X_IOPAD(0x0030, PIN_INPUT, 7) /* (G21) OSPI0_CSn1.GPIO0_12 */
 			AM62X_IOPAD(0x004c, PIN_INPUT, 7) /* (P24) GPMC0_AD4.GPIO0_19 */
 			AM62X_IOPAD(0x0050, PIN_INPUT, 7) /* (P22) GPMC0_AD5.GPIO0_20 */
 			AM62X_IOPAD(0x00a4, PIN_INPUT, 7) /* (M22) GPMC0_DIR.GPIO0_40 */
@@ -583,6 +573,22 @@
 			AM62X_IOPAD(0x0258, PIN_OUTPUT, 7) /* (F18) USB1_DRVVBUS.GPIO1_51 */
  		>;
  	};
+
+        ospi0_pins_default: ospi0-pins-default {
+                pinctrl-single,pins = <
+                        AM62X_IOPAD(0x000, PIN_OUTPUT, 0) /* (H24) OSPI0_CLK */
+                        AM62X_IOPAD(0x02c, PIN_OUTPUT, 0) /* (F23) OSPI0_CSn0 */
+                        AM62X_IOPAD(0x00c, PIN_INPUT, 0) /* (E25) OSPI0_D0 */
+                        AM62X_IOPAD(0x010, PIN_INPUT, 0) /* (G24) OSPI0_D1 */
+                        AM62X_IOPAD(0x014, PIN_INPUT, 0) /* (F25) OSPI0_D2 */
+                        AM62X_IOPAD(0x018, PIN_INPUT, 0) /* (F24) OSPI0_D3 */
+                        AM62X_IOPAD(0x01c, PIN_INPUT, 0) /* (J23) OSPI0_D4 */
+                        AM62X_IOPAD(0x020, PIN_INPUT, 0) /* (J25) OSPI0_D5 */
+                        AM62X_IOPAD(0x024, PIN_INPUT, 0) /* (H25) OSPI0_D6 */
+                        AM62X_IOPAD(0x028, PIN_INPUT, 0) /* (J22) OSPI0_D7 */
+                        AM62X_IOPAD(0x008, PIN_INPUT, 0) /* (J24) OSPI0_DQS */
+                >;
+        };
 };
 
 &mcu_pmx0 {
@@ -709,7 +715,6 @@
 };
 
 &fss {
-	status = "disabled";
 };
 
 &main_mcan0 {
@@ -1178,4 +1183,65 @@
 	pinctrl-0 = <&mcu_mcan0_pins_default>;
 	phys = <&transceiver2>;
 	status = "okay";
+};
+
+&ospi0 {
+        pinctrl-names = "default";
+        pinctrl-0 = <&ospi0_pins_default>;
+        status = "okay";
+
+    spi_nor_flash: flash@0 {
+      compatible = "jedec,spi-nor";
+      reg = <0x0>;
+      spi-tx-bus-width = <8>;
+      spi-rx-bus-width = <8>;
+      spi-max-frequency = <25000000>;
+      cdns,tshsl-ns = <60>;
+      cdns,tsd2d-ns = <60>;
+      cdns,tchsh-ns = <60>;
+      cdns,tslch-ns = <60>;
+      cdns,read-delay = <4>;
+      cdns,phy-mode;
+
+      partitions {
+        compatible = "fixed-partitions";
+        #address-cells = <1>;
+        #size-cells = <1>;
+
+        partition@0 {
+          label = "ospi.tiboot3";
+          reg = <0x0 0x80000>;
+        };
+
+        partition@80000 {
+          label = "ospi.tispl";
+          reg = <0x80000 0x200000>;
+        };
+
+        partition@280000 {
+          label = "ospi.u-boot";
+          reg = <0x280000 0x400000>;
+        };
+
+        partition@680000 {
+          label = "ospi.env";
+          reg = <0x680000 0x40000>;
+        };
+
+        partition@6c0000 {
+          label = "ospi.env.backup";
+          reg = <0x6c0000 0x40000>;
+        };
+
+        partition@800000 {
+          label = "ospi.rootfs";
+          reg = <0x800000 0x37c0000>;
+        };
+
+        partition@3fc0000 {
+          label = "ospi.phypattern";
+          reg = <0x3fc0000 0x40000>;
+        };
+      };
+    };
 };

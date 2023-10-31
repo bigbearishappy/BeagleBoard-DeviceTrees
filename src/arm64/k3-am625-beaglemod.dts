@@ -43,6 +43,7 @@
 		serial4 = &main_uart6;
 		serial5 = &main_uart2;
 		spi0 = &ospi0;
+		spi1 = &main_spi0;
 		usb0 = &usb0;
 		usb1 = &usb1;
 		can0 = &main_mcan0;
@@ -440,7 +441,6 @@
 
 	vdd_3v3_sd_pins_default: vdd-3v3-sd-pins-default {
 		pinctrl-single,pins = <
-			AM62X_IOPAD(0x01c4, PIN_INPUT, 7) /* (B14) SPI0_D1_GPIO1_19 */
 		>;
 	};
 
@@ -588,6 +588,15 @@
                         AM62X_IOPAD(0x008, PIN_INPUT, 0) /* (J24) OSPI0_DQS */
                 >;
         };
+
+	main_spi0_pins_default: main-spi0-pins-default {
+		pinctrl-single,pins = <
+			AM62X_IOPAD(0x01bc, PIN_INPUT, 0) /* (A14) SPI0_CLK */
+			AM62X_IOPAD(0x01b4, PIN_INPUT, 0) /* (A13) SPI0_CS0 */
+			AM62X_IOPAD(0x01c0, PIN_INPUT, 0) /* (B13) SPI0_D0 */
+			AM62X_IOPAD(0x01c4, PIN_INPUT, 0) /* (B14) SPI0_D1 */
+		>;
+	};
 };
 
 &mcu_pmx0 {
@@ -1162,7 +1171,15 @@
 };
 
 &main_spi0 {
-	status = "disabled";
+	status = "okay";
+	pinctrl-names = "default";
+	pinctrl-0 = <&main_spi0_pins_default>;
+	
+       spidev@0 {
+               compatible = "spidev";
+               spi-max-frequency = <1000000>;
+               reg = <0>;
+       };
 };
 
 &main_spi1 {

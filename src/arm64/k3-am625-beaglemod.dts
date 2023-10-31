@@ -43,7 +43,6 @@
 		serial4 = &main_uart6;
 		serial5 = &main_uart2;
 		spi0 = &ospi0;
-		spi1 = &main_spi2;
 		usb0 = &usb0;
 		usb1 = &usb1;
 		can0 = &main_mcan0;
@@ -1000,7 +999,7 @@
 };
 
 &main_spi2 {
-	status = "okay";
+	status = "disabled";
 };
 
 &mcasp0 {

@@ -44,6 +44,7 @@
 		serial5 = &main_uart2;
 		spi0 = &ospi0;
 		spi1 = &main_spi0;
+		spi2 = &mcu_spi0;
 		usb0 = &usb0;
 		usb1 = &usb1;
 		can0 = &main_mcan0;
@@ -201,26 +202,26 @@
  			default-state = "off";
  		};
 
-		led-5 {
+		led-2 {
 			label = "wlan-en";
 			gpios = <&pca953x 2 GPIO_ACTIVE_HIGH>;
 			linux,default-trigger = "default-off";
  			default-state = "on";
  		};
 
-		led-6 {
+		led-3 {
 			label = "sn74-56dir";
 			gpios = <&main_gpio0 16 GPIO_ACTIVE_HIGH>;
 			linux,default-trigger = "default-off";
 			default-state = "off";
  		};
-		led-7 {
+		led-4 {
 			label = "sn74-oe";
 			gpios = <&main_gpio0 36 GPIO_ACTIVE_HIGH>;
 			linux,default-trigger = "default-off";
 			default-state = "off";
  		};
-		led-8 {
+		led-5 {
 			label = "sn74-1234dir";
 			gpios = <&main_gpio0 15 GPIO_ACTIVE_HIGH>;
 			linux,default-trigger = "default-off";
@@ -340,10 +341,20 @@
 
 	gpio0_pins_default: gpio0-pins-default {
 		pinctrl-single,pins = <
-			AM62X_IOPAD(0x004c, PIN_INPUT, 7) /* (P24) GPMC0_AD4.GPIO0_19 */
-			AM62X_IOPAD(0x0050, PIN_INPUT, 7) /* (P22) GPMC0_AD5.GPIO0_20 */
-			AM62X_IOPAD(0x00a4, PIN_INPUT, 7) /* (M22) GPMC0_DIR.GPIO0_40 */
-			AM62X_IOPAD(0x00ac, PIN_INPUT, 7) /* (L21) GPMC0_CSn1.GPIO0_42 */
+			AM62X_IOPAD(0x0030, PIN_OUTPUT, 7) /* (G21) OSPI0_CSn1.GPIO0_12 */
+			AM62X_IOPAD(0x006c, PIN_OUTPUT, 7) /* (T22) GPMC0_AD12.GPIO0_27 */
+			AM62X_IOPAD(0x0064, PIN_OUTPUT, 7) /* (T25) GPMC0_AD10.GPIO0_25 */
+			AM62X_IOPAD(0x0068, PIN_OUTPUT, 7) /* (R21) GPMC0_AD11.GPIO0_26 */
+		>;
+	};
+
+	gpio1_pins_default: gpio1-pins-default {
+		pinctrl-single,pins = <
+			AM62X_IOPAD(0x019c, PIN_OUTPUT, 7) /* (B18) MCASP0_AXR1.GPIO1_9 */
+			AM62X_IOPAD(0x01a0, PIN_OUTPUT, 7) /* (E18) MCASP0_AXR0.GPIO1_10 */
+			AM62X_IOPAD(0x0194, PIN_OUTPUT, 7) /* (B19) MCASP0_AXR3.GPIO1_7 */
+			AM62X_IOPAD(0x0198, PIN_OUTPUT, 7) /* (A19) MCASP0_AXR2.GPIO1_8 */
+			AM62X_IOPAD(0x01b0, PIN_OUTPUT, 7) /* (A20) MCASP0_ACLKR.GPIO1_14 */
 		>;
 	};
 
@@ -606,17 +617,10 @@
 		>;
 	};
 
-	i2c_qwiic_pins_default: i2c-qwiic-pins-default {
+	mcu_i2c0_pins_default: i2c-qwiic-pins-default {
 		pinctrl-single,pins = <
 			AM62X_MCU_IOPAD(0x0044, PIN_INPUT, 0) /* (A8) MCU_I2C0_SCL */
 			AM62X_MCU_IOPAD(0x0048, PIN_INPUT, 0) /* (D10) MCU_I2C0_SDA */
-		>;
-	};
-
-	gbe_pmx_obsclk: gbe-pmx-clk-default {
-		pinctrl-single,pins = <
-			/* 25MHz on MCU_OBSCLK0 -unmodified board has strap option to be changed to enable this */
-			AM62X_MCU_IOPAD(0x0004, PIN_OUTPUT, 1) /* (B8) MCU_SPI0_CS1.MCU_OBSCLK0 */
 		>;
 	};
 
@@ -647,6 +651,22 @@
 		pinctrl-single,pins = <
 			AM62X_MCU_IOPAD(0x0038, PIN_INPUT, 0) /* (B3) MCU_MCAN0_RX */
 			AM62X_MCU_IOPAD(0x0034, PIN_OUTPUT, 0) /* (D6) MCU_MCAN0_TX */
+		>;
+	};
+
+	mcu_gpio0_pins_default: mcu-gpio0-pins-default {
+		pinctrl-single,pins = <
+			AM62X_MCU_IOPAD(0x003c, PIN_OUTPUT, 7) /* (E5) MCU_MCAN1_TX.MCU_GPIO0_15 */
+			AM62X_MCU_IOPAD(0x0000, PIN_OUTPUT, 7) /* (E8) MCU_SPI0_CS0.MCU_GPIO0_0 */
+			AM62X_MCU_IOPAD(0x0004, PIN_OUTPUT, 7) /* (B8) MCU_SPI0_CS1.MCU_GPIO0_1 */
+		>;
+	};
+
+	pin40_spi_pins_default: pin40-spi-pins-default {
+		pinctrl-single,pins = <
+			AM62X_MCU_IOPAD(0x0008, PIN_INPUT, 0) /* (A7) MCU_SPI0_CLK */
+			AM62X_MCU_IOPAD(0x000c, PIN_INPUT, 0) /* (D9) MCU_SPI0_D0 */
+			AM62X_MCU_IOPAD(0x0010, PIN_INPUT, 0) /* (C9) MCU_SPI0_D1 */
 		>;
 	};
 };
@@ -687,10 +707,10 @@
 
 &mcu_i2c0 {
 	pinctrl-names = "default";
-	pinctrl-0 = <&i2c_qwiic_pins_default>;
+	pinctrl-0 = <&mcu_i2c0_pins_default>;
 	/* Bump Up to 400 if desired */
 	clock-frequency = <10000>;
-	symlink = "play/qwiic/i2c";
+	status = "okay";
 };
 
 &mcu_uart0 {
@@ -704,7 +724,17 @@
 };
 
 &mcu_spi0 {
-	status = "disabled";
+       status = "okay";
+       pinctrl-names = "default";
+       pinctrl-0 = <&pin40_spi_pins_default>;
+       #address-cells = <1>;
+       #size-cells = <0>;
+
+       spidev@0 {
+               compatible = "spidev";
+               spi-max-frequency = <1000000>;
+               reg = <0>;
+       };
 };
 
 &mcu_spi1 {
@@ -759,8 +789,7 @@
 
 &cpsw3g {
 	pinctrl-names = "default";
-	pinctrl-0 = <&rgmii1_pins_default>, <&rgmii2_pins_default>,
-		    <&gbe_pmx_obsclk>;
+	pinctrl-0 = <&rgmii1_pins_default>, <&rgmii2_pins_default>;
 	assigned-clocks = <&k3_clks 157 70>, <&k3_clks 157 20>;
 	assigned-clock-parents = <&k3_clks 157 72>, <&k3_clks 157 22>;
 };
@@ -783,44 +812,16 @@
 &main_gpio0 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&gpio0_pins_default>;
-	gpio-line-names = "BL_EN_3V3", "SPE_PO_EN", "RTC_INT",	/* 0-2 */
-		"USR0", "USR1", "USR2", "USR3", "", "", "USR4",	/* 3-9 */
-		"EEPROM_WP",					/* 10 */
-		"CSI2_CAMERA_GPIO1", "CSI2_CAMERA_GPIO2",	/* 11-12 */
-		"CC1352P7_BOOT", "CC1352P7_RSTN", "", "", "",	/* 13-17 */
-		"USR_BUTTON", "", "", "", "", "", "", "", "",	/* 18-26 */
-		"", "", "", "", "", "", "", "", "", "HDMI_INT",	/* 27-36 */
-		"", "VDD_WLAN_EN", "", "", "WL_IRQ", "GBE_INTN",/* 37-42 */
-		"", "", "", "", "", "", "", "", "", "", "", "",	/* 43-54 */
-		"", "", "", "", "", "", "", "", "", "", "", "", /* 55-66 */
-		"", "", "", "", "", "", "", "", "", "", "", "", /* 67-78 */
-		"", "", "", "", "", "",				/* 79-84 */
-		"BITBANG_MDIO_DATA", "BITBANG_MDIO_CLK",	/* 85-86 */
-		"", "", "", "", "";				/* 87-91 */
 };
 
 &main_gpio1 {
-	gpio-line-names = "", "", "", "", "",			/* 0-4 */
-		"SPE_RSTN", "SPE_INTN", "MIKROBUS_GPIO1_7",	/* 5-7 */
-		"MIKROBUS_GPIO1_8", "MIKROBUS_GPIO1_9",		/* 8-9 */
-		"MIKROBUS_GPIO1_10", "MIKROBUS_GPIO1_11",	/* 10-11 */
-		"MIKROBUS_GPIO1_12", "MIKROBUS_W1_GPIO0",	/* 12-13 */
-		"MIKROBUS_GPIO1_14",				/* 14 */
-		"", "", "", "", "VDD_3V3_SD", "", "",		/* 15-21 */
-		"MIKROBUS_GPIO1_22", "MIKROBUS_GPIO1_23",	/* 22-23 */
-		"MIKROBUS_GPIO1_24", "MIKROBUS_GPIO1_25",	/* 24-25 */
-		"", "", "", "", "", "", "", "", "", "", "", "",	/* 26-37 */
-		"", "", "", "", "", "", "", "", "", "",		/* 38-47 */
-		"SD_CD", "SD_VOLT_SEL", "", "";			/* 48-51 */
+	pinctrl-names = "default";
+	pinctrl-0 = <&gpio1_pins_default>;
 };
 
 &mcu_gpio0 {
-	gpio-line-names = "", "", "", "",			/* 0-3 */
-		"", "", "", "",					/* 4-7 */
-		"", "", "", "",					/* 8-11 */
-		"", "", "", "",					/* 12-15 */
-		"", "QWIIC_I2C0_SCL", "QWIIC_I2C0_SDA", "",	/* 16-19 */
-		"", "", "", "";					/* 20-23 */
+	pinctrl-names = "default";
+	pinctrl-0 = <&mcu_gpio0_pins_default>;
 };
 
 &main_i2c0 {

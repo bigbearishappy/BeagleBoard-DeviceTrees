@@ -145,9 +145,7 @@
 		enable-active-high;
 		regulator-always-on;
 		vin-supply = <&vdd_3v3>;
-		gpio = <&main_gpio0 38 GPIO_ACTIVE_HIGH>;
-		pinctrl-names = "default";
-		pinctrl-0 = <&wifi_en_pins_default>;
+		gpio = <&pca953x 2 GPIO_ACTIVE_HIGH>;
 	};
 
 	vdd_3v3_sd: regulator-4 {
@@ -200,13 +198,6 @@
 			gpios = <&main_gpio0 17 GPIO_ACTIVE_HIGH>;
 			linux,default-trigger = "mmc1";
  			default-state = "off";
- 		};
-
-		led-2 {
-			label = "wlan-en";
-			gpios = <&pca953x 2 GPIO_ACTIVE_HIGH>;
-			linux,default-trigger = "default-off";
- 			default-state = "on";
  		};
 
 		led-3 {
@@ -478,12 +469,6 @@
 			AM62X_IOPAD(0x010c, PIN_INPUT, 0) /* (E23) MMC2_DAT2 */
 			AM62X_IOPAD(0x0108, PIN_INPUT, 0) /* (D24) MMC2_DAT3 */
 			AM62X_IOPAD(0x11c, PIN_INPUT, 0) /* (#N/A) MMC2_CLKB */
-		>;
-	};
-
-	wifi_en_pins_default: wifi-en-pins-default {
-		pinctrl-single,pins = <
-			AM62X_IOPAD(0x009c, PIN_OUTPUT, 7) /* (V25) GPMC0_WAIT1.GPIO0_38 */
 		>;
 	};
 

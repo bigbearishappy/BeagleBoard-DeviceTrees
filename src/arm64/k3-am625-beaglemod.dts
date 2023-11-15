@@ -150,8 +150,8 @@
 
 	vdd_3v3_sd: regulator-4 {
 		/* output of TPS22918DBVR-U21 */
-		//pinctrl-names = "default";
-		//pinctrl-0 = <&vdd_3v3_sd_pins_default>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&vdd_3v3_sd_pins_default>;
 
 		compatible = "regulator-fixed";
 		regulator-name = "vdd_3v3_sd";
@@ -160,7 +160,7 @@
 		enable-active-high;
 		regulator-always-on;
 		vin-supply = <&vdd_3v3>;
-		gpio = <&main_gpio1 19 GPIO_ACTIVE_HIGH>;
+		gpio = <&main_gpio0 1 GPIO_ACTIVE_HIGH>;
 	};
 
 	vdd_sd_dv: regulator-5 {
@@ -172,7 +172,7 @@
 		regulator-max-microvolt = <3300000>;
 		regulator-boot-on;
 		vin-supply = <&vdd_3v3>;
-		gpios = <&main_gpio1 49 GPIO_ACTIVE_HIGH>;
+		gpios = <&main_gpio1 12 GPIO_ACTIVE_HIGH>;
 		states = <1800000 0x0>,
 			 <3300000 0x1>;
 	};
@@ -353,7 +353,7 @@
 
 	vdd_sd_dv_pins_default: vdd-sd-pins-default {
 		pinctrl-single,pins = <
-			AM62X_IOPAD(0x0244, PIN_OUTPUT, 7) /* (C17) MMC1_SDWP.GPIO1_49 */
+			AM62X_IOPAD(0x01a8, PIN_OUTPUT, 7) /* (D20) MCASP0_AFSX.GPIO1_12 */
 		>;
 	};
 
@@ -445,6 +445,7 @@
 
 	vdd_3v3_sd_pins_default: vdd-3v3-sd-pins-default {
 		pinctrl-single,pins = <
+			AM62X_IOPAD(0x0004, PIN_OUTPUT, 7) /* (G25) OSPI0_LBCLKO.GPIO0_1 */
 		>;
 	};
 
@@ -882,8 +883,8 @@
 				 * is controlled via GPIO with bypass config
 				 * as per the NVM configuration
 				 */
-				regulator-name = "VDD_SD";
-				regulator-min-microvolt = <1800000>;
+				regulator-name = "VDD_SD_3V3";
+				regulator-min-microvolt = <3300000>;
 				regulator-max-microvolt = <3300000>;
 				regulator-allow-bypass;
 				regulator-boot-on;
@@ -1060,11 +1061,9 @@
 	pinctrl-0 = <&sd_pins_default>;
 
 	vmmc-supply = <&vdd_3v3_sd>;
-	//vqmmc-supply = <&vdd_sd_dv>;
-	vqmmc-supply = <&ldo1_reg>;
+	vqmmc-supply = <&vdd_sd_dv>;
 	ti,driver-strength-ohm = <50>;
 	disable-wp;
-	no-1-8-v;
 	cd-gpios = <&main_gpio1 48 GPIO_ACTIVE_LOW>;
 	cd-debounce-delay-ms = <100>;
 	ti,fails-without-test-cd;

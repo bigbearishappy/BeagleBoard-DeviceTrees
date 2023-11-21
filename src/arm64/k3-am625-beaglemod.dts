@@ -657,6 +657,16 @@
 			AM62X_MCU_IOPAD(0x0010, PIN_INPUT, 0) /* (C9) MCU_SPI0_D1 */
 		>;
 	};
+
+         wkup_uart0_pins_default: wkup-uart0-pins-default {
+                 pinctrl-single,pins = <
+                         AM62X_MCU_IOPAD(0x002c, PIN_INPUT, 0) /* (A7) WKUP_UART0_CTSn */
+                         AM62X_MCU_IOPAD(0x0030, PIN_OUTPUT, 0) /* (B4) WKUP_UART0_RTSn */
+                         AM62X_MCU_IOPAD(0x0024, PIN_INPUT, 0) /* (B5) WKUP_UART0_RXD */
+                         AM62X_MCU_IOPAD(0x0028, PIN_OUTPUT, 0) /* (C6) WKUP_UART0_TXD */
+                 >;
+         };
+
 };
 
 &a53_opp_table {
@@ -690,7 +700,9 @@
 };
 
 &wkup_uart0 {
-	status = "disabled";
+        status = "okay";
+        pinctrl-names = "default";
+        pinctrl-0 = <&wkup_uart0_pins_default>;
 };
 
 &mcu_i2c0 {

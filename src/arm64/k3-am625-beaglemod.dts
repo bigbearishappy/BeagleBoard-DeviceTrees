@@ -173,8 +173,8 @@
 		regulator-boot-on;
 		vin-supply = <&vdd_3v3>;
 		gpios = <&main_gpio1 12 GPIO_ACTIVE_HIGH>;
-		states = <1800000 0x0>,
-			 <3300000 0x1>;
+		states = <1800000 0x1>,
+			 <3300000 0x0>;
 	};
 
 	transceiver1: can-phy1 {

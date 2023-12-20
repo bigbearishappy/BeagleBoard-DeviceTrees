@@ -218,6 +218,12 @@
 			linux,default-trigger = "default-off";
 			default-state = "on";
  		};
+		led-8 {
+			label = "lcd-vdd";
+			gpios = <&main_gpio0 1 GPIO_ACTIVE_HIGH>;
+			linux,default-trigger = "default-off";
+			default-state = "on";
+ 		};
 	};
 
 	hdmi0: connector {
@@ -522,6 +528,7 @@
 	backlight_pins_default: bl-pins-default {
 		pinctrl-single,pins = <
 			AM62X_IOPAD(0x01ac, PIN_OUTPUT, 6) /* (E19) MCASP0_AFSR.EHRPWM0_A */
+			AM62X_IOPAD(0x009c, PIN_OUTPUT, 7) /* (V25) GPMC0_WAIT1.GPIO0_38 */
 		>;
 	};
 
@@ -544,6 +551,7 @@
 			AM62X_IOPAD(0x0040, PIN_OUTPUT, 7) /* (N23) GPMC0_AD1.GPIO0_16 */
 			AM62X_IOPAD(0x00a0, PIN_OUTPUT, 7) /* (K25) GPMC0_WPn.GPIO0_39 */
 			AM62X_IOPAD(0x0084, PIN_OUTPUT, 7) /* (L23) GPMC0_ADVn_ALE.GPIO0_32 */
+			AM62X_IOPAD(0x0004, PIN_OUTPUT, 7) /* (G25) OSPI0_LBCLKO.GPIO0_1 */
 		>;
 	};
 

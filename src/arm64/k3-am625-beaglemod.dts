@@ -566,7 +566,7 @@
  		pinctrl-single,pins = <
 			AM62X_IOPAD(0x01d0, PIN_INPUT, 3) /* (A15) UART0_CTSn.UART2_RXD */
 			AM62X_IOPAD(0x01d4, PIN_OUTPUT, 3) /* (B15) UART0_RTSn.UART2_TXD */
-			AM62X_IOPAD(0x0254, PIN_OUTPUT, 7) /* (C20) USB0_DRVVBUS.GPIO1_50 */
+			AM62X_IOPAD(0x0058, PIN_OUTPUT, 7) /* (R23) GPMC0_AD7.GPIO0_22 */
  		>;
  	};
 
@@ -574,7 +574,7 @@
  		pinctrl-single,pins = <
 			AM62X_IOPAD(0x0034, PIN_INPUT, 5) /* (H21) OSPI0_CSn2.UART5_RXD */
 			AM62X_IOPAD(0x0038, PIN_OUTPUT, 5) /* (E24) OSPI0_CSn3.UART5_TXD */
-			AM62X_IOPAD(0x0258, PIN_OUTPUT, 7) /* (F18) USB1_DRVVBUS.GPIO1_51 */
+			AM62X_IOPAD(0x004c, PIN_OUTPUT, 7) /* (P24) GPMC0_AD4.GPIO0_19 */
  		>;
  	};
 
@@ -1160,7 +1160,7 @@
 	status = "okay";
 	pinctrl-names = "default";
 	pinctrl-0 = <&main_uart2_pins_default>;
-	rts-gpios = <&main_gpio1 50 GPIO_ACTIVE_HIGH>;
+	rts-gpios = <&main_gpio0 22 GPIO_ACTIVE_HIGH>;
 };
 
 &main_uart3 {
@@ -1175,7 +1175,7 @@
 	status = "okay";
 	pinctrl-names = "default";
 	pinctrl-0 = <&main_uart5_pins_default>;
-	rts-gpios = <&main_gpio1 51 GPIO_ACTIVE_HIGH>;
+	rts-gpios = <&main_gpio0 19 GPIO_ACTIVE_HIGH>;
 };
 
 &main_uart6 {

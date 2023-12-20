@@ -206,12 +206,6 @@
 			linux,default-trigger = "default-off";
 			default-state = "off";
  		};
-		led-4 {
-			label = "sn74-oe";
-			gpios = <&main_gpio0 36 GPIO_ACTIVE_HIGH>;
-			linux,default-trigger = "default-off";
-			default-state = "off";
- 		};
 		led-6 {
 			label = "sn74-alloe";
 			gpios = <&main_gpio0 39 GPIO_ACTIVE_HIGH>;
@@ -548,7 +542,6 @@
 		pinctrl-single,pins = <
 			AM62X_IOPAD(0x0044, PIN_OUTPUT, 7) /* (N24) GPMC0_AD2.GPIO0_17 */
 			AM62X_IOPAD(0x0040, PIN_OUTPUT, 7) /* (N23) GPMC0_AD1.GPIO0_16 */
-			AM62X_IOPAD(0x0094, PIN_OUTPUT, 7) /* (N20) GPMC0_BE1n.GPIO0_36 */
 			AM62X_IOPAD(0x00a0, PIN_OUTPUT, 7) /* (K25) GPMC0_WPn.GPIO0_39 */
 			AM62X_IOPAD(0x0084, PIN_OUTPUT, 7) /* (L23) GPMC0_ADVn_ALE.GPIO0_32 */
 		>;
@@ -606,7 +599,7 @@
 &mcu_pmx0 {
 	hdmi_gpio_pins_default: hdmi-gpio-pins-default {
 		pinctrl-single,pins = <
-			AM62X_MCU_IOPAD(0x0040, PIN_INPUT_PULLUP, 7) /* (D4) MCU_MCAN1_RX.MCU_GPIO0_16 */
+			AM62X_IOPAD(0x0094, PIN_INPUT_PULLUP, 7) /* (N20) GPMC0_BE1n.GPIO0_36 */
 		>;
 	};
 
@@ -953,8 +946,8 @@
 		pinctrl-0 = <&hdmi_gpio_pins_default>;
 		reg = <0x4c>;
 
-		interrupt-parent = <&mcu_gpio0>;
-		interrupts = <16 IRQ_TYPE_EDGE_FALLING>;
+		interrupt-parent = <&main_gpio0>;
+		interrupts = <36 IRQ_TYPE_EDGE_FALLING>;
 
 		vcn33-supply = <&vdd_3v3>;
 		vcn18-supply = <&buck2_reg>;

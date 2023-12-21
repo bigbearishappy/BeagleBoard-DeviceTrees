@@ -96,8 +96,12 @@
 	        interrupt-parent = <&main_gpio1>;
 	        interrupts = <16 IRQ_TYPE_EDGE_FALLING>;
 
-		touchscreen-size-x = <1920>;
-		touchscreen-size-y = <1200>;
+		touchscreen-size-x = <1280>;
+		touchscreen-size-y = <800>;
+
+		touchscreen-inverted-x;
+		touchscreen-inverted-y;
+		touchscreen-swapped-x-y;
 
 		reset-gpios = <&pca953x 12 GPIO_ACTIVE_HIGH>;
 		irq-gpios = <&main_gpio1 16 GPIO_ACTIVE_HIGH>;

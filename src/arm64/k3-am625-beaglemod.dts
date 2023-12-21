@@ -714,7 +714,7 @@
 	pinctrl-names = "default";
 	pinctrl-0 = <&mcu_i2c0_pins_default>;
 	/* Bump Up to 400 if desired */
-	clock-frequency = <10000>;
+	clock-frequency = <100000>;
 	status = "okay";
 };
 

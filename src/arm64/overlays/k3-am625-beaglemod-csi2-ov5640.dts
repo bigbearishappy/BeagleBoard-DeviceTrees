@@ -43,7 +43,7 @@
 		clocks = <&clk_ov5640_fixed>;
 		clock-names = "xclk";
 		/* rPI csi2 modules hook reset and power signals together */
-		powerdown-gpios = <&main_gpio0 28 GPIO_ACTIVE_LOW>;
+		powerdown-gpios = <&main_gpio0 40 GPIO_ACTIVE_LOW>;
 
 		port {
 			csi2_cam0: endpoint {

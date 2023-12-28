@@ -637,13 +637,6 @@
 		>;
 	};
 
-	wifi_32k_clk: mcu-clk-out-pins-default {
-		pinctrl-single,pins = <
-			/* A12 comes out on Strap option to route to wifi 32k */
-			AM62X_MCU_IOPAD(0x0084, PIN_OUTPUT, 0) /* (A12) WKUP_CLKOUT0 */
-		>;
-	};
-
 	mcu_mcan0_pins_default: mcu-mcan0-pins-default {
 		pinctrl-single,pins = <
 			AM62X_MCU_IOPAD(0x0038, PIN_INPUT, 0) /* (B3) MCU_MCAN0_RX */
@@ -1104,7 +1097,7 @@
 &sdhci2 {
 	vmmc-supply = <&wlan_en>;
 	pinctrl-names = "default";
-	pinctrl-0 = <&wifi_pins_default>, <&wifi_32k_clk>;
+	pinctrl-0 = <&wifi_pins_default>;
 	bus-width = <4>;
 	non-removable;
 	ti,fails-without-test-cd;

@@ -23,7 +23,7 @@
 				brightness-levels = <0 4 8 16 32 64 128 255>;
 				default-brightness-level = <6>;
 
-				enable-gpios = <&pca953x 13 GPIO_ACTIVE_HIGH>;
+				enable-gpios = <&main_gpio0 38 GPIO_ACTIVE_HIGH>;
 				pwms = <&epwm0 0 20000 0>;
 			};
 
@@ -96,8 +96,12 @@
 	        interrupt-parent = <&main_gpio1>;
 	        interrupts = <16 IRQ_TYPE_EDGE_FALLING>;
 
-		touchscreen-size-x = <1920>;
-		touchscreen-size-y = <1200>;
+		touchscreen-size-x = <1280>;
+		touchscreen-size-y = <800>;
+
+		touchscreen-inverted-x;
+		touchscreen-inverted-y;
+		touchscreen-swapped-x-y;
 
 		reset-gpios = <&pca953x 12 GPIO_ACTIVE_HIGH>;
 		irq-gpios = <&main_gpio1 16 GPIO_ACTIVE_HIGH>;
